@@ -1,0 +1,7 @@
+include /etc/nginx/proxy_params;
+
+proxy_cache webcache;
+proxy_cache_key $scheme$host$request_uri;
+proxy_cache_valid  200 301 302 304 180m;
+proxy_cache_valid  any 1m;
+

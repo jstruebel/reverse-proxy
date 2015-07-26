@@ -1,0 +1,16 @@
+#include <turnkey/base>
+
+nginx
+
+php5-gd
+php5-cli
+php5-cgi
+php5-curl
+php5-mysql
+php5-xcache
+webmin-phpini
+
+postfix
+webmin-postfix
+
+

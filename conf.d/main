@@ -1,0 +1,18 @@
+#!/bin/sh -ex
+
+# setup fastcgi/nginx
+update-rc.d php-fastcgi defaults
+
+mkdir -p /var/run/nginx
+chown root:www-data /var/run/nginx
+chmod 770 /var/run/nginx
+
+# Add NGINX proxy header fields
+CONF=/etc/nginx/proxy_params
+sed -i "s|proxy_add_x_forwarded_for;|proxy_add_x_forwarded_for;\nproxy_set_header X-Forwarded-Proto \$scheme;\nproxy_set_header X-NginX-Proxy true;|" $CONF
+
+# create cache directories
+mkdir -p /var/lib/nginx/cache/tmp
+chown -R www-data:root /var/lib/nginx/cache
+chmod -R 700 /var/lib/nginx/cache
+

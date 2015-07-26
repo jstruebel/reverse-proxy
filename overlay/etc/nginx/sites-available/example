@@ -1,0 +1,25 @@
+upstream backend_servers {
+    server backend.server.1;
+    server backend.server.2;
+    server backend.server.3;
+}
+
+server {
+    listen 0.0.0.0:80;
+    server_name proxy.example.com;
+
+    include /etc/nginx/include/proxy;
+
+    if ($request_method !~ ^(GET|HEAD|POST)$) {
+        return 403;
+    }
+
+    location / {
+        proxy_pass http://backend_servers;
+    }
+
+    location /special/ {
+        proxy_cache off;
+        proxy_pass http://some.other.server/path/;
+    }
+}
